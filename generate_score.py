@@ -29,16 +29,13 @@ class Computer:
         }
         self.bleu = datasets.load_metric('./cached/bleu/bleu.py')
         self.chunk = chunk
-        # print(self.dataset.dataset)
+
         try:
             if model == 't5':
                 cbleu_corpus = []
                 for row in self.dataset.dataset['train']['input_ids']:
                     code = self.tokenizer.decode(row, skip_special_tokens=True)
                     code_ids = self.bleu_tokenizer(code)['input_ids']
-                    # for w_id in self.white_space_id:
-                    #     while w_id in code_ids:
-                    #         code_ids.remove(w_id)
                     code_ids = [str(i) for i in code_ids]
                     cbleu_corpus.append(code_ids)
                 self.cbleu = CBleu(cbleu_corpus)
@@ -56,7 +53,7 @@ class Computer:
         train_dataset = my_dataset.with_format(type='torch',columns=self.useful_columns[args.model])
         data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=False)
          
-        if args.model in ['gpt2','gpt2', 'codegen']:
+        if args.model in ['gpt2','codegen']:
             score_dict = self.gen_score_for_gpt2(data_loader)
         elif args.model.startswith('estimator'):
             score_dict = self.gen_score_for_estimator(data_loader)
