@@ -6,7 +6,6 @@ random.seed(233)
 class ScoredDataset(BaseDataset):
     def __init__(self, data_path, tokenizer, is_dev=False, mode='train',max_pos_length=128, min_query_len=10, model_type='seq', metric='prob',model=None,language='java'):
         super().__init__(data_path, tokenizer, is_dev=is_dev, mode=mode, max_pos_length=max_pos_length, min_query_len=min_query_len, model_type=model_type,language=language)
-        # self.space_token = self.tokenizer.encode(' ')
         self.model = model
         self.metric = metric
         if self.mode == 'train':
@@ -28,7 +27,6 @@ class ScoredDataset(BaseDataset):
         input_code = [n+'<extra_id_0>' for n in examples['input_code']]
         t5_tokenized = self.tokenizer(input_code)['input_ids']
         t5_answer = self.tokenizer(examples['answer_code'])['input_ids']
-        # t5_answer = t5_answer[1:-1]
         examples['input_ids'] = t5_tokenized
         examples['answers'] = t5_answer
         return examples

@@ -45,10 +45,16 @@ class BaseDataset:
                     test_data += [json.loads(line) for line in lines]
             self.data = {'train': train_data, 'test': test_data}
         elif os.path.isdir(data_path) and not self.mode.startswith('eval'):
-            shards = [load_from_disk(os.path.join(data_path, f'train_{i}')) for i in range(4)] 
-            train_set = concatenate_datasets(shards)
-            shards = [load_from_disk(os.path.join(data_path, f'test_{i}')) for i in range(4)] 
-            test_set = concatenate_datasets(shards)
+            # check if shard path exist
+            shard_files = [name for name in os.path.listdir(data_path) if 'train_' in name]
+            if len(shard_files) > 0:
+                shards = [load_from_disk(os.path.join(data_path, f'train_{i}')) for i in range(len(shard_files))] 
+                train_set = concatenate_datasets(shards)
+                shards = [load_from_disk(os.path.join(data_path, f'test_{i}')) for i in range(len(shard_files))] 
+                test_set = concatenate_datasets(shards)
+            else:
+                train_set = load_from_disk(os.path.join(data_path, 'train'))
+                train_set = load_from_disk(os.path.join(data_path, 'test'))
             self.dataset = {
                 'train': train_set,
                 'test': test_set

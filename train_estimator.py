@@ -15,11 +15,10 @@ if __name__ == '__main__':
     model.config.pad_token_id = tokenizer.pad_token_id
 
     training_args = TrainingArguments(
-        output_dir=f'./results/{args.language}_{args.run_name}_with_space',
+        output_dir=f'./results/{args.language}_{args.run_name}_',
         evaluation_strategy="epoch",
         eval_steps=1,
         save_strategy='epoch',
-        # save_total_limit=1,
         learning_rate=5e-7,
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,

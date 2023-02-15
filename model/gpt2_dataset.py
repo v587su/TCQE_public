@@ -79,10 +79,6 @@ class GPT2Dataset(BaseDataset):
 
         for input_ids in tokenized['input_ids']:
             _, l = self.get_actual_length(input_ids)
-            # if l < self.max_pos_length:
-                # split_point = random.randint(1,l)
-            # else:
-                # split_point = random.randint(1, self.max_pos_length-self.min_query_len)
             max_length = min(l, self.max_pos_length)
             split_point = random.sample(range(1,max_length+1), split_num)
             for point in split_point:
