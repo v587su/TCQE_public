@@ -1,5 +1,7 @@
 # Source code of the paper "Don't Complete It! Preventing Unhelpful Code Completion for Productive and Sustainable Neural Code Completion Systems"
 
+<span style="color:red">This repo is the previous version of this paper. Refer to https://github.com/v587su/FrugalCoder for the latest version.</span>
+
 ### Datasets
 Download CSN and COFIC into the `datasets` folder. The datasets are available at [CSN(python)](https://s3.amazonaws.com/code-search-net/CodeSearchNet/v2/python.zip) and [COFIC](https://drive.google.com/file/d/1Ai0WMYrIGQQLqBC180mzUVDSbpkgO6uD/view)
 
